@@ -136,6 +136,15 @@ interface AccessTransformerMinecraftTransformer : AccessTransformerPatcher, Acce
                 }
             }
         }
+
+        // Fix whitespaces in ATs that can cause forge to fail on 1.8.9+
+        if (!legacyATFormat) {
+            val lines = temp.bufferedReader().readLines()
+            temp.bufferedWriter().use {
+                    writer -> lines.filter { s -> !s.startsWith(" ") }.forEach { writer.write(it) }
+            }
+        }
+
         try {
             project.execOps.javaexec { spec ->
                 val toolchain = project.extensions.getByType(JavaToolchainService::class.java)
