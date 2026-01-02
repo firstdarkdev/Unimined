@@ -261,7 +261,7 @@ tasks.test {
 gradlePlugin {
     plugins {
         create("simplePlugin") {
-            id = "xyz.wagyourtail.unimined"
+            id = "dev.firstdark.unimined"
             implementationClass = "xyz.wagyourtail.unimined.UniminedPlugin"
         }
     }
