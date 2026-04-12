@@ -101,8 +101,12 @@ class ModRemapProvider(config: Set<Configuration>, val project: Project, val pro
         resolved
     }
 
+    private val mappingSuffix by lazy {
+        "-mapped-${runBlocking { provider.mappings.combinedNames() }}"
+    }
+
     fun getConfigForFile(file: File): Configuration? = runBlocking {
-        val name = file.nameWithoutExtension.substringBefore("-mapped-${provider.mappings.combinedNames()}")
+        val name = file.nameWithoutExtension.substringBefore(mappingSuffix)
         for ((c, artifacts) in originalDepsFiles) {
             for (r in artifacts.values) {
                 if (r.nameWithoutExtension == name) {
